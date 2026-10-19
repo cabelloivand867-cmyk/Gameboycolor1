@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- handheld body -->
+    <path android:fillColor="#3A3544"
+        android:pathData="M32,26h44a4,4 0 0 1 4,4v42a10,10 0 0 1 -10,10H38a10,10 0 0 1 -10,-10V30a4,4 0 0 1 4,-4z" />
+    <!-- screen -->
+    <path android:fillColor="#D0F8E0"
+        android:pathData="M37,32h34v26H37z" />
+    <!-- d-pad -->
+    <path android:fillColor="#17141C"
+        android:pathData="M41,66h8v3h3v8h-3v3h-8v-3h-3v-8h3z" />
+    <!-- buttons -->
+    <path android:fillColor="#A64AA8"
+        android:pathData="M63,70m-4,0a4,4 0 1 1 8,0a4,4 0 1 1 -8,0" />
+    <path android:fillColor="#6B2F6F"
+        android:pathData="M70,64m-4,0a4,4 0 1 1 8,0a4,4 0 1 1 -8,0" />
+</vector>
