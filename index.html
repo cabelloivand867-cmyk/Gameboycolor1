@@ -14,6 +14,13 @@
   --key: #6b2f6f;
   --key-hot: #a64aa8;
   --dpad: #17141c;
+  --edge: #54495f;
+  --arrow: #4b4357;
+  --key-edge: #3d1a40;
+  --key-shadow: #2a1030;
+  --key-ink: #f1d9f2;
+  --sys: #403a4c;
+  --sys-edge: #5a5068;
   --font-ui: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
   --font-mono: "DM Mono", ui-monospace, monospace;
   color-scheme: dark;
@@ -29,15 +36,16 @@ body {
   overscroll-behavior: none; user-select: none; -webkit-user-select: none;
 }
 .bar { width: 100%; max-width: 480px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.name { flex: 1; min-width: 0; font-size: 20px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name { flex: 1 1 100%; min-width: 0; font-size: 20px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .name small { display: block; font: 400 11px var(--font-mono); letter-spacing: 0; color: var(--ink-dim); text-transform: none; }
 button, .btn {
   font: 600 15px var(--font-ui); letter-spacing: .06em; text-transform: uppercase;
-  color: var(--ink); background: var(--shell-hi); border: 1px solid #54495f; border-radius: 6px;
+  color: var(--ink); background: var(--shell-hi); border: 1px solid var(--edge); border-radius: 6px;
   padding: 8px 12px; min-height: 40px; cursor: pointer;
 }
 button:focus-visible, .btn:focus-visible { outline: 2px solid var(--key-hot); outline-offset: 2px; }
-button[aria-pressed="true"] { background: var(--key); border-color: var(--key-hot); }
+.bar button, .bar .btn { flex: 1 1 0; text-align: center; padding-left: 8px; padding-right: 8px; }
+button[aria-pressed="true"] { background: var(--key); border-color: var(--key-hot); color: var(--key-ink); }
 .screen-wrap { width: 100%; max-width: 480px; background: #14111a; padding: 14px 14px 10px; border-radius: 10px 10px 36px 10px; }
 .glass { position: relative; background: var(--glass); aspect-ratio: 160 / 144; border-radius: 3px; overflow: hidden; }
 canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
@@ -52,24 +60,31 @@ canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; 
 #dpad::before { left: 33%; right: 33%; top: 0; bottom: 0; }
 #dpad::after { top: 33%; bottom: 33%; left: 0; right: 0; }
 #dpad i { position: absolute; width: 0; height: 0; border: 8px solid transparent; z-index: 1; }
-#dpad .u { left: calc(50% - 8px); top: 8%; border-bottom-color: #4b4357; }
-#dpad .d { left: calc(50% - 8px); bottom: 8%; border-top-color: #4b4357; }
-#dpad .l { top: calc(50% - 8px); left: 8%; border-right-color: #4b4357; }
-#dpad .r { top: calc(50% - 8px); right: 8%; border-left-color: #4b4357; }
+#dpad .u { left: calc(50% - 8px); top: 8%; border-bottom-color: var(--arrow); }
+#dpad .d { left: calc(50% - 8px); bottom: 8%; border-top-color: var(--arrow); }
+#dpad .l { top: calc(50% - 8px); left: 8%; border-right-color: var(--arrow); }
+#dpad .r { top: calc(50% - 8px); right: 8%; border-left-color: var(--arrow); }
 #dpad.on-up .u { border-bottom-color: var(--key-hot); } #dpad.on-down .d { border-top-color: var(--key-hot); }
 #dpad.on-left .l { border-right-color: var(--key-hot); } #dpad.on-right .r { border-left-color: var(--key-hot); }
 .face { position: relative; width: min(170px, 40vw); aspect-ratio: 1.15; justify-self: end; }
-.face .k { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: var(--key); border: 2px solid #3d1a40; box-shadow: 0 3px 0 #2a1030; font: 700 18px var(--font-ui); display: grid; place-items: center; touch-action: none; color: #f1d9f2; }
+.face .k { position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; background: var(--key); border: 2px solid var(--key-edge); box-shadow: 0 3px 0 var(--key-shadow); font: 700 18px var(--font-ui); display: grid; place-items: center; touch-action: none; color: var(--key-ink); }
 .face .k.on, .sys .k.on { background: var(--key-hot); transform: translateY(2px); box-shadow: none; }
 .face .b { left: 2%; bottom: 8%; } .face .a { right: 2%; top: 8%; }
 .sys { grid-column: 1 / -1; display: flex; justify-content: center; gap: 22px; padding-top: 6px; }
-.sys .k { padding: 10px 18px; border-radius: 999px; background: #403a4c; border: 1px solid #5a5068; font: 600 13px var(--font-ui); letter-spacing: .14em; text-transform: uppercase; touch-action: none; color: var(--ink); min-height: 40px; }
-.foot { font: 400 11px/1.5 var(--font-mono); color: var(--ink-dim); max-width: 480px; text-align: center; }
+.sys .k { padding: 10px 18px; border-radius: 999px; background: var(--sys); border: 1px solid var(--sys-edge); font: 600 13px var(--font-ui); letter-spacing: .14em; text-transform: uppercase; touch-action: none; color: var(--ink); min-height: 40px; }
+.foot { width: 100%; max-width: 480px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-bottom: 4px; }
+.shell-label { font: 600 13px var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim); }
+.shells { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.sw { width: 32px; height: 32px; min-height: 0; padding: 0; border-radius: 50%; border: 2px solid rgba(0, 0, 0, .35); background: linear-gradient(135deg, var(--c) 50%, var(--c2, var(--c)) 50%); }
+.sw[aria-checked="true"] { outline: 2px solid var(--ink); outline-offset: 3px; }
+.kbd { display: none; margin: 0; font: 400 11px/1.5 var(--font-mono); color: var(--ink-dim); text-align: center; }
+@media (hover: hover) and (pointer: fine) { .kbd { display: block; } }
 input[type=file] { display: none; }
 </style>
 
 <div class="bar">
   <div class="name" id="title">Pocket Color<small id="meta">Game Boy / Game Boy Color</small></div>
+  <button id="snd" aria-pressed="true" title="Sound on or off">Sound</button>
   <button id="ff" aria-pressed="false" title="Fast forward">2x</button>
   <button id="pause" aria-pressed="false">Pause</button>
   <label class="btn" for="rom" tabindex="0" id="open">Open ROM</label>
@@ -99,7 +114,11 @@ input[type=file] { display: none; }
   </div>
 </div>
 
-<div class="foot">Arrows move, X = A, Z = B, Enter = Start, Shift = Select. Battery saves are kept in this browser. No sound yet.</div>
+<div class="foot">
+  <div class="shell-label">Shell color: <span id="shellName">Midnight</span></div>
+  <div class="shells" id="shells" role="radiogroup" aria-label="Shell color"></div>
+  <p class="kbd">Keyboard: arrows to move, X for A, Z for B, Enter for Start, Shift for Select.</p>
+</div>
 
 <script>
 /* Game Boy / Game Boy Color emulator core (no audio).
@@ -124,6 +143,10 @@ input[type=file] { display: none; }
   const DMG = [0xFFD0F8E0, 0xFF70C088, 0xFF566834, 0xFF201808];
 
   const BATTERY = new Set([0x03, 0x06, 0x09, 0x0D, 0x0F, 0x10, 0x13, 0x1B, 0x1E]);
+  const DUTY = [0x01, 0x81, 0x87, 0x7E];
+  // bits that always read back as 1 for NR10..NR52 (index = register - 0xFF10)
+  const APU_MASK = [0x80, 0x3F, 0x00, 0xFF, 0xBF, 0xFF, 0x3F, 0x00, 0xFF, 0xBF, 0x7F, 0xFF, 0x9F, 0xFF, 0xBF, 0xFF,
+    0xFF, 0x00, 0x00, 0xBF, 0x00, 0x00, 0x70];
   const RAM_SIZES = [0, 0, 0x2000, 0x8000, 0x20000, 0x10000];
 
   class GBC {
@@ -186,6 +209,7 @@ input[type=file] { display: none; }
       // hdma
       this.hdmaActive = false; this.hdmaSrc = 0; this.hdmaDst = 0; this.hdmaLen = 0;
 
+      this.apuInit();
       this.reset();
     }
 
@@ -195,7 +219,9 @@ input[type=file] { display: none; }
       else { r[7] = 0x01; this.f = 0xB0; r[0] = 0x00; r[1] = 0x13; r[2] = 0x00; r[3] = 0xD8; r[4] = 0x01; r[5] = 0x4D; }
       const io = this.io;
       io[0x00] = 0xCF; io[0x0F] = 0xE1; io[0x40] = 0x91; io[0x41] = 0x85; io[0x47] = 0xFC;
-      io[0x48] = 0xFF; io[0x49] = 0xFF; io[0x26] = 0xF1;
+      io[0x48] = 0xFF; io[0x49] = 0xFF;
+      io[0x24] = 0x77; io[0x25] = 0xF3; io[0x11] = 0xBF; io[0x12] = 0xF3; io[0x14] = 0xBF; io[0x16] = 0x3F;
+      io[0x19] = 0xBF; io[0x1A] = 0x7F; io[0x1C] = 0x9F; io[0x1E] = 0xBF; io[0x23] = 0xBF;
       this.updateBanks();
     }
 
@@ -336,7 +362,7 @@ input[type=file] { display: none; }
         case 0x6A: return this.cgb ? io[0x6A] | 0x40 : 0xFF;
         case 0x6B: return this.cgb ? this.objPal[io[0x6A] & 0x3F] : 0xFF;
         case 0x70: return this.cgb ? (0xF8 | this.wbank) : 0xFF;
-        default: return io[n];
+        default: if (n >= 0x10 && n <= 0x3F) return this.apuRead(n); return io[n];
       }
     }
 
@@ -379,7 +405,9 @@ input[type=file] { display: none; }
         case 0x6A: io[0x6A] = v; return;
         case 0x6B: if (this.cgb) { const i = io[0x6A] & 0x3F; this.objPal[i] = v; if (io[0x6A] & 0x80) io[0x6A] = 0x80 | ((i + 1) & 0x3F); } return;
         case 0x70: if (this.cgb) this.wbank = (v & 7) || 1; return;
-        default: io[n] = v;
+        default:
+          if (n >= 0x10 && n <= 0x3F) { this.apuWrite(n, v); return; }
+          io[n] = v;
       }
     }
 
@@ -415,6 +443,199 @@ input[type=file] { display: none; }
       else this.pad &= ~m;
     }
 
+    // ---------- audio (APU) ----------
+    apuInit() {
+      const sq = () => ({ on: false, dac: false, len: 0, lenEn: false, vol: 0, envInit: 0, envDir: 0, envPer: 0, envTimer: 0,
+        freq: 0, timer: 8, pos: 0, duty: 0, swPer: 0, swDir: 0, swShift: 0, swTimer: 0, swOn: false, shadow: 0 });
+      this.c1 = sq(); this.c2 = sq();
+      this.c3 = { on: false, dac: false, len: 0, lenEn: false, vol: 0, freq: 0, timer: 8, pos: 0 };
+      this.c4 = { on: false, dac: false, len: 0, lenEn: false, vol: 0, envInit: 0, envDir: 0, envPer: 0, envTimer: 0,
+        shift: 0, width: 0, div: 0, timer: 8, lfsr: 0x7FFF };
+      this.apuOn = true; this.seq = 0; this.seqCycles = 0;
+      this.audioL = new Float32Array(32768); this.audioR = new Float32Array(32768);
+      this.aw = 0; this.ar = 0; this.audioEnabled = false;
+      this.setSampleRate(44100);
+      this.sumL = 0; this.sumR = 0; this.sumN = 0; this.sampleAcc = 0; this.capL = 0; this.capR = 0;
+    }
+
+    setSampleRate(sr) { this.sampleRate = sr; this.cps = 4194304 / sr; }
+
+    // Pull n stereo frames into outL/outR. Missing frames are filled with silence.
+    readAudio(outL, outR, n) {
+      const mask = 32767;
+      if (this.aw - this.ar > 8192) this.ar = this.aw - 4096; // keep latency low
+      let i = 0;
+      for (; i < n && this.ar < this.aw; i++, this.ar++) {
+        outL[i] = this.audioL[this.ar & mask]; outR[i] = this.audioR[this.ar & mask];
+      }
+      for (; i < n; i++) { outL[i] = 0; outR[i] = 0; }
+    }
+
+    apuRead(n) {
+      if (n === 0x26) {
+        return 0x70 | (this.apuOn ? 0x80 : 0) | (this.c1.on ? 1 : 0) | (this.c2.on ? 2 : 0) | (this.c3.on ? 4 : 0) | (this.c4.on ? 8 : 0);
+      }
+      if (n >= 0x30) return this.io[n];
+      if (n > 0x26) return 0xFF;
+      return this.io[n] | APU_MASK[n - 0x10];
+    }
+
+    envWrite(c, v) {
+      c.envInit = v >> 4; c.envDir = (v >> 3) & 1; c.envPer = v & 7;
+      c.dac = (v & 0xF8) !== 0;
+      if (!c.dac) c.on = false;
+    }
+
+    sweepCalc(c) {
+      const d = c.shadow >> c.swShift;
+      const nf = c.swDir ? c.shadow - d : c.shadow + d;
+      if (nf > 2047) c.on = false;
+      return nf;
+    }
+
+    trigSquare(c, isCh1) {
+      c.on = c.dac;
+      if (c.len === 0) c.len = 64;
+      c.timer = (2048 - c.freq) * 4;
+      c.envTimer = c.envPer || 8;
+      c.vol = c.envInit;
+      if (isCh1) {
+        c.shadow = c.freq; c.swTimer = c.swPer || 8;
+        c.swOn = c.swPer > 0 || c.swShift > 0;
+        if (c.swShift > 0) this.sweepCalc(c);
+      }
+    }
+
+    apuWrite(n, v) {
+      const io = this.io, c1 = this.c1, c2 = this.c2, c3 = this.c3, c4 = this.c4;
+      if (n === 0x26) {
+        const on = (v & 0x80) !== 0;
+        if (!on && this.apuOn) {
+          for (let i = 0x10; i < 0x26; i++) io[i] = 0;
+          c1.on = c2.on = c3.on = c4.on = false;
+          c1.dac = c2.dac = c3.dac = c4.dac = false;
+          c1.lenEn = c2.lenEn = c3.lenEn = c4.lenEn = false;
+        } else if (on && !this.apuOn) this.seq = 0;
+        this.apuOn = on;
+        return;
+      }
+      if (n >= 0x30) { io[n] = v; return; }
+      if (!this.apuOn) return;
+      io[n] = v;
+      switch (n) {
+        case 0x10: c1.swPer = (v >> 4) & 7; c1.swDir = (v >> 3) & 1; c1.swShift = v & 7; break;
+        case 0x11: c1.duty = v >> 6; c1.len = 64 - (v & 63); break;
+        case 0x12: this.envWrite(c1, v); break;
+        case 0x13: c1.freq = (c1.freq & 0x700) | v; break;
+        case 0x14: c1.freq = (c1.freq & 0xFF) | ((v & 7) << 8); c1.lenEn = (v & 0x40) !== 0; if (v & 0x80) this.trigSquare(c1, true); break;
+        case 0x16: c2.duty = v >> 6; c2.len = 64 - (v & 63); break;
+        case 0x17: this.envWrite(c2, v); break;
+        case 0x18: c2.freq = (c2.freq & 0x700) | v; break;
+        case 0x19: c2.freq = (c2.freq & 0xFF) | ((v & 7) << 8); c2.lenEn = (v & 0x40) !== 0; if (v & 0x80) this.trigSquare(c2, false); break;
+        case 0x1A: c3.dac = (v & 0x80) !== 0; if (!c3.dac) c3.on = false; break;
+        case 0x1B: c3.len = 256 - v; break;
+        case 0x1C: c3.vol = (v >> 5) & 3; break;
+        case 0x1D: c3.freq = (c3.freq & 0x700) | v; break;
+        case 0x1E:
+          c3.freq = (c3.freq & 0xFF) | ((v & 7) << 8); c3.lenEn = (v & 0x40) !== 0;
+          if (v & 0x80) { c3.on = c3.dac; if (c3.len === 0) c3.len = 256; c3.timer = (2048 - c3.freq) * 2; c3.pos = 0; }
+          break;
+        case 0x20: c4.len = 64 - (v & 63); break;
+        case 0x21: this.envWrite(c4, v); break;
+        case 0x22: c4.shift = v >> 4; c4.width = (v >> 3) & 1; c4.div = v & 7; break;
+        case 0x23:
+          c4.lenEn = (v & 0x40) !== 0;
+          if (v & 0x80) {
+            c4.on = c4.dac; if (c4.len === 0) c4.len = 64;
+            c4.timer = (c4.div ? c4.div * 16 : 8) << c4.shift;
+            c4.envTimer = c4.envPer || 8; c4.vol = c4.envInit; c4.lfsr = 0x7FFF;
+          }
+          break;
+      }
+    }
+
+    seqClock() {
+      const s = this.seq, ch = [this.c1, this.c2, this.c3, this.c4];
+      if (!(s & 1)) {
+        for (let i = 0; i < 4; i++) { const c = ch[i]; if (c.lenEn && c.len > 0 && --c.len === 0) c.on = false; }
+      }
+      if (s === 2 || s === 6) {
+        const c = this.c1;
+        if (--c.swTimer <= 0) {
+          c.swTimer = c.swPer || 8;
+          if (c.swOn && c.swPer > 0) {
+            const nf = this.sweepCalc(c);
+            if (nf <= 2047 && c.swShift > 0) { c.shadow = nf; c.freq = nf; this.sweepCalc(c); }
+          }
+        }
+      }
+      if (s === 7) {
+        const envs = [this.c1, this.c2, this.c4];
+        for (let i = 0; i < 3; i++) {
+          const c = envs[i];
+          if (c.envPer && --c.envTimer <= 0) {
+            c.envTimer = c.envPer;
+            if (c.envDir) { if (c.vol < 15) c.vol++; } else if (c.vol > 0) c.vol--;
+          }
+        }
+      }
+      this.seq = (s + 1) & 7;
+    }
+
+    apuStep(c) {
+      this.seqCycles += c;
+      while (this.seqCycles >= 8192) { this.seqCycles -= 8192; this.seqClock(); }
+      const c1 = this.c1, c2 = this.c2, c3 = this.c3, c4 = this.c4, io = this.io;
+      let a1 = 0, a2 = 0, a3 = 0, a4 = 0;
+      if (c1.on) {
+        c1.timer -= c; while (c1.timer <= 0) { c1.timer += (2048 - c1.freq) * 4; c1.pos = (c1.pos + 1) & 7; }
+        a1 = (((DUTY[c1.duty] >> (7 - c1.pos)) & 1) ? c1.vol : 0) / 7.5 - 1;
+      }
+      if (c2.on) {
+        c2.timer -= c; while (c2.timer <= 0) { c2.timer += (2048 - c2.freq) * 4; c2.pos = (c2.pos + 1) & 7; }
+        a2 = (((DUTY[c2.duty] >> (7 - c2.pos)) & 1) ? c2.vol : 0) / 7.5 - 1;
+      }
+      if (c3.on) {
+        c3.timer -= c; while (c3.timer <= 0) { c3.timer += (2048 - c3.freq) * 2; c3.pos = (c3.pos + 1) & 31; }
+        const b = io[0x30 + (c3.pos >> 1)];
+        let smp = (c3.pos & 1) ? (b & 0xF) : (b >> 4);
+        smp = c3.vol === 0 ? 0 : smp >> (c3.vol - 1);
+        a3 = smp / 7.5 - 1;
+      }
+      if (c4.on) {
+        c4.timer -= c;
+        while (c4.timer <= 0) {
+          c4.timer += (c4.div ? c4.div * 16 : 8) << c4.shift;
+          const x = (c4.lfsr & 1) ^ ((c4.lfsr >> 1) & 1);
+          c4.lfsr = (c4.lfsr >> 1) | (x << 14);
+          if (c4.width) c4.lfsr = (c4.lfsr & ~0x40) | (x << 6);
+        }
+        a4 = ((c4.lfsr & 1) ? 0 : c4.vol) / 7.5 - 1;
+      }
+      // the 4 channels' DAC output is mixed per NR51 panning and NR50 volume
+      let l = 0, r = 0;
+      if (this.apuOn) {
+        const pan = io[0x25];
+        if (pan & 1) r += a1; if (pan & 2) r += a2; if (pan & 4) r += a3; if (pan & 8) r += a4;
+        if (pan & 0x10) l += a1; if (pan & 0x20) l += a2; if (pan & 0x40) l += a3; if (pan & 0x80) l += a4;
+        const v = io[0x24];
+        l *= (((v >> 4) & 7) + 1) / 32; r *= ((v & 7) + 1) / 32;
+      }
+      this.sumL += l * c; this.sumR += r * c; this.sumN += c; this.sampleAcc += c;
+      if (this.sampleAcc >= this.cps) {
+        this.sampleAcc -= this.cps;
+        let outL = this.sumL / this.sumN, outR = this.sumR / this.sumN;
+        this.sumL = this.sumR = this.sumN = 0;
+        // gentle high-pass to remove DC offset, like the real output stage
+        const hl = outL - this.capL; this.capL = outL - hl * 0.996; outL = hl;
+        const hr = outR - this.capR; this.capR = outR - hr * 0.996; outR = hr;
+        if (this.audioEnabled) {
+          const i = this.aw & 32767;
+          this.audioL[i] = outL; this.audioR[i] = outR; this.aw++;
+        }
+      }
+    }
+
     // ---------- timing ----------
     timaInc() {
       if (++this.tima > 0xFF) { this.tima = this.io[6]; this.io[0x0F] |= 4; }
@@ -430,6 +651,7 @@ input[type=file] { display: none; }
         let n = Math.floor((old + c) / period) - Math.floor(old / period);
         while (n-- > 0) this.timaInc();
       }
+      this.apuStep(c >> this.speed);
       if (this.lcdOn) this.ppuStep(c >> this.speed);
     }
 
@@ -790,6 +1012,7 @@ input[type=file] { display: none; }
   var lcd = document.getElementById('lcd'), ctx = lcd.getContext('2d');
   var img = ctx.createImageData(160, 144), px = new Uint32Array(img.data.buffer);
   var gb = null, paused = false, fast = false, last = 0, acc = 0, saveKey = null, lastSave = 0;
+  var actx = null, node = null, muted = false;
   var FRAME = 1000 / 59.7275;
 
   function $(id) { return document.getElementById(id); }
@@ -827,6 +1050,7 @@ input[type=file] { display: none; }
       (gb.mbc || gb.cartType === 0 ? '' : ' / unsupported cartridge type 0x' + gb.cartType.toString(16));
     $('empty').hidden = true;
     paused = false; $('pause').setAttribute('aria-pressed', 'false'); $('pause').textContent = 'Pause';
+    attachAudio();
     acc = 0; last = 0;
   }
 
@@ -840,6 +1064,113 @@ input[type=file] { display: none; }
     paused = !paused; this.setAttribute('aria-pressed', paused); this.textContent = paused ? 'Resume' : 'Pause';
   });
   $('ff').addEventListener('click', function () { fast = !fast; this.setAttribute('aria-pressed', fast); });
+
+
+
+  // ---- shell color ----
+  // c = shell color, c2 = second color for two-tone editions (swatch only), k = A/B key color
+  var SHELLS = [
+    { n: 'Midnight', c: '#2b2733', k: '#6b2f6f' },
+    { n: 'Berry', c: '#a8325a', k: '#3b2a63' },
+    { n: 'Grape', c: '#5b3f8c', k: '#c0408a' },
+    { n: 'Teal', c: '#1f7f86', k: '#d6455d' },
+    { n: 'Kiwi', c: '#6fa83f', k: '#2f4a8f' },
+    { n: 'Dandelion', c: '#e2b72f', k: '#8a2f4f' },
+    { n: 'Atomic Purple', c: '#6c4fc0', k: '#2e2370' },
+    { n: 'Clear', c: '#c3c9d4', k: '#5a3f9a' },
+    { n: 'Clear Blue', c: '#3f78d6', k: '#1c2f73' },
+    { n: 'Clear Green', c: '#4fb36a', k: '#1f5c33' },
+    { n: 'Pokémon Yellow', c: '#f2d03a', c2: '#2f6fd0', k: '#d6453a' },
+    { n: 'Gold and Silver', c: '#d9b44a', c2: '#c2c6cc', k: '#7a3b2a' },
+    { n: 'Silver', c: '#c2c6cc', k: '#3b4a7a' },
+    { n: 'Orange and Blue', c: '#f08a2e', c2: '#2f5fc4', k: '#2f5fc4' },
+    { n: 'White', c: '#f1f1ee', k: '#3b6fd0' }
+  ];
+  function rgb(c) { return [1, 3, 5].map(function (i) { return parseInt(c.substr(i, 2), 16); }); }
+  function mix(a, b, t) {
+    var A = rgb(a), B = rgb(b);
+    return '#' + A.map(function (v, i) { return ('0' + Math.round(v + (B[i] - v) * t).toString(16)).slice(-2); }).join('');
+  }
+  function lum(c) {
+    var v = rgb(c).map(function (x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+    return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+  }
+  function applyShell(i) {
+    var t = SHELLS[i], b = t.c, light = lum(b) > 0.2, ink = light ? '#1d1a22' : '#f1ecf7';
+    var dpad = mix(b, '#000000', 0.72), st = document.documentElement.style;
+    st.setProperty('--shell', b);
+    st.setProperty('--shell-hi', mix(b, light ? '#000000' : '#ffffff', 0.1));
+    st.setProperty('--edge', mix(b, '#000000', 0.35));
+    st.setProperty('--ink', ink);
+    st.setProperty('--ink-dim', mix(ink, b, 0.4));
+    st.setProperty('--dpad', dpad);
+    st.setProperty('--arrow', mix(dpad, '#ffffff', 0.25));
+    st.setProperty('--key', t.k);
+    st.setProperty('--key-hot', mix(t.k, '#ffffff', 0.25));
+    st.setProperty('--key-edge', mix(t.k, '#000000', 0.45));
+    st.setProperty('--key-shadow', mix(t.k, '#000000', 0.6));
+    st.setProperty('--key-ink', lum(t.k) > 0.4 ? '#1d1a22' : '#ffffff');
+    st.setProperty('--sys', mix(b, '#000000', 0.22));
+    st.setProperty('--sys-edge', mix(b, '#000000', 0.4));
+    $('shellName').textContent = t.n;
+    [].forEach.call($('shells').children, function (el, j) { el.setAttribute('aria-checked', String(j === i)); });
+  }
+  SHELLS.forEach(function (t, i) {
+    var el = document.createElement('button');
+    el.className = 'sw'; el.type = 'button';
+    el.setAttribute('role', 'radio'); el.setAttribute('aria-label', t.n);
+    el.style.setProperty('--c', t.c);
+    if (t.c2) el.style.setProperty('--c2', t.c2);
+    el.addEventListener('click', function () {
+      applyShell(i);
+      try { localStorage.setItem('pocketcolor:shell2', SHELLS[i].n); } catch (e) {}
+    });
+    $('shells').appendChild(el);
+  });
+  var savedShell = 0;
+  try {
+    var nm = localStorage.getItem('pocketcolor:shell2');
+    SHELLS.forEach(function (t, i) { if (t.n === nm) savedShell = i; });
+  } catch (e) {}
+  applyShell(savedShell);
+
+  // ---- audio ----
+  // The sound chip fills a buffer; a script processor drains it. When audio is
+  // running, the audio clock sets the emulation speed so sound never drifts.
+  function startAudio() {
+    try {
+      if (!actx) {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        actx = new AC({ latencyHint: 'interactive' });
+        node = actx.createScriptProcessor(2048, 0, 2);
+        node.onaudioprocess = function (e) {
+          var L = e.outputBuffer.getChannelData(0), R = e.outputBuffer.getChannelData(1);
+          if (!gb || paused) { L.fill(0); R.fill(0); return; }
+          gb.readAudio(L, R, L.length);
+          if (muted || fast) { L.fill(0); R.fill(0); }
+        };
+        node.connect(actx.destination);
+        if (gb) { gb.setSampleRate(actx.sampleRate); gb.audioEnabled = true; }
+      }
+      if (actx.state === 'suspended') {
+        actx.resume().then(function () { if (gb) gb.ar = gb.aw; });
+      }
+    } catch (e) {}
+  }
+  function attachAudio() {
+    if (!gb) return;
+    if (actx) gb.setSampleRate(actx.sampleRate);
+    gb.audioEnabled = !!actx;
+  }
+  $('snd').addEventListener('click', function () {
+    muted = !muted;
+    this.setAttribute('aria-pressed', String(!muted));
+    this.textContent = muted ? 'Muted' : 'Sound';
+    startAudio();
+  });
+  document.addEventListener('pointerdown', startAudio);
+  document.addEventListener('keydown', startAudio);
 
   // ---- input ----
   function setKey(bit, down) { if (gb) gb.setKey(bit, down); }
@@ -878,7 +1209,10 @@ input[type=file] { display: none; }
   dpad.addEventListener('pointerup', dpadUp); dpad.addEventListener('pointercancel', dpadUp); dpad.addEventListener('lostpointercapture', dpadUp);
 
   document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
-  document.addEventListener('visibilitychange', function () { if (document.hidden) persist(); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { persist(); if (actx) actx.suspend(); }
+    else if (actx) actx.resume().then(function () { if (gb) gb.ar = gb.aw; });
+  });
   window.addEventListener('pagehide', persist);
 
   // ---- main loop ----
@@ -889,7 +1223,14 @@ input[type=file] { display: none; }
     acc += Math.min(100, t - last) * (fast ? 2 : 1);
     last = t;
     var n = 0;
-    while (acc >= FRAME && n < 4) { gb.runFrame(); acc -= FRAME; n++; }
+    if (actx && actx.state === 'running' && !fast) {
+      // audio clock drives speed: keep about 4000 samples queued
+      acc = 0;
+      while (gb.aw - gb.ar < 4096 && n < 4) { gb.runFrame(); n++; }
+    } else {
+      while (acc >= FRAME && n < 4) { gb.runFrame(); acc -= FRAME; n++; }
+      if (gb.audioEnabled) gb.ar = gb.aw;
+    }
     if (n) {
       px.set(gb.fb);
       ctx.putImageData(img, 0, 0);
